@@ -9,6 +9,7 @@ const ejs = require('ejs');
 
 const indexRouter = require('./routes/index');
 const celebritiesRouter = require('./routes/celebrities');
+const moviesRouter = require('./routes/movies');
 // const celebrityDetailRouter = require('./routes/celebrities/:id');
 // const usersRouter = require('./routes/users');
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 // app.use('/index', usersRouter);
 app.use('/celebrities', celebritiesRouter);
+app.use('/movies', moviesRouter);
 // app.use('/celebrities/:id', celebrityDetailRouter);
 
 // catch 404 and forward to error handler

@@ -3,77 +3,77 @@ const express = require('express');
 
 // const mongoose = require('mongoose');
 
-const celebrities = require('../models/celebrity');
+const movies = require('../models/movie');
 
 const router = express.Router();
 
 
-// SHOW ALL CELEBRITIES
+// SHOW ALL MOVIES
 router.get('/', (req, res, next) => {
-  celebrities.find()
-    .then((famosos) => {
-      res.render('celebrities', { famosos });
+  movies.find()
+    .then((pelis) => {
+      res.render('movies/movies', { pelis });
     })
     .catch((error) => {
       next(error);
     });
 });
 
-// ADD NEW CELEBRITIES
+// ADD NEW MOVIES
 router.get('/new', (req, res, next) => {
   console.log('we are in get new');
-  res.render('new');
+  res.render('movies/new');
 });
-
 
 router.post('/', (req, res, next) => {
-  const { name, occupation, catchPhrase } = req.body;
-  celebrities.create({
-    name,
-    occupation,
-    catchPhrase,
+  const { title, genre, plot } = req.body;
+  movies.create({
+    title,
+    genre,
+    plot,
   })
     .then((createdObject) => {
-      res.redirect('/celebrities');
+      res.redirect('/movies');
     })
     .catch((error) => {
       next(error);
     });
 });
 
-// GET A SPECIFIC CELEBRITY
+
+// GET MOVIE DETAILS
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  celebrities.findById(id)
-    .then((celebrity) => {
-      console.log(celebrity);
-      res.render('show', { celebrity });
+  movies.findById(id)
+    .then((movie) => {
+      console.log(movie);
+      res.render('movies/movie', { movie });
     })
     .catch((error) => {
       next(error);
     });
 });
 
-//  DELETE A CELEBRITY
+
+//  DELETE A MOVIE
 router.post('/:id/delete', (req, res, next) => {
   const { id } = req.params;
   console.log(id);
-  celebrities.findByIdAndDelete(id)
-    .then((celebrity) => {
-      res.redirect('/celebrities');
+  movies.findByIdAndDelete(id)
+    .then((movie) => {
+      res.redirect('/movies');
     })
     .catch((error) => {
       next(error);
     });
 });
 
-// UPDATE A CELEBRITY
+// UPDATE MOVIE INFO
 router.get('/:id/update', (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
-  celebrities.findById(id)
-    .then((celebrity) => {
-      res.render('update', { celebrity });
+  movies.findById(id)
+    .then((movie) => {
+      res.render('movies/update', { movie });
     })
     .catch((error) => {
       next(error);
@@ -82,16 +82,14 @@ router.get('/:id/update', (req, res, next) => {
 
 router.post('/:id/update', (req, res, next) => {
   const { id } = req.params;
-  const { name, occupation, catchPhrase } = req.body;
-  console.log(id);
-  celebrities.findByIdAndUpdate(id, { name, occupation, catchPhrase })
-    .then((celebrity) => {
-      res.render('show', { celebrity });
+  const { title, genre, plot } = req.body;
+  movies.findByIdAndUpdate(id, { title, genre, plot })
+    .then((movie) => {
+      res.render('movies/movie', { movie });
     })
     .catch((error) => {
       next(error);
     });
 });
-
 
 module.exports = router;
