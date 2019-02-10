@@ -4,10 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const expressLayouts = require('express-ejs-layouts');
+const ejs = require('ejs');
+// const expressLayouts = require('express-ejs-layouts');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const celebritiesRouter = require('./routes/celebrities');
+// const celebrityDetailRouter = require('./routes/celebrities/:id');
+// const usersRouter = require('./routes/users');
 
 mongoose.connect('mongodb://localhost:27017/mongoose-movies', { useNewUrlParser: true })
   .then(() => {
@@ -22,17 +25,19 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('layout', 'layouts/layout');
+// app.set('layout', 'views/layouts/layout');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(expressLayouts);
+// app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/index', usersRouter);
+app.use('/celebrities', celebritiesRouter);
+// app.use('/celebrities/:id', celebrityDetailRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
