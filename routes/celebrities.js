@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   celebrities.find()
     .then((famosos) => {
-      res.render('celebrities', { famosos });
+      res.render('celebrities/celebrities', { famosos });
     })
     .catch((error) => {
       next(error);
@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
 // ADD NEW CELEBRITIES
 router.get('/new', (req, res, next) => {
   console.log('we are in get new');
-  res.render('new');
+  res.render('celebrities/new');
 });
 
 
@@ -47,7 +47,7 @@ router.get('/:id', (req, res, next) => {
   celebrities.findById(id)
     .then((celebrity) => {
       console.log(celebrity);
-      res.render('show', { celebrity });
+      res.render('celebrities/show', { celebrity });
     })
     .catch((error) => {
       next(error);
@@ -73,7 +73,7 @@ router.get('/:id/update', (req, res, next) => {
   console.log(id);
   celebrities.findById(id)
     .then((celebrity) => {
-      res.render('update', { celebrity });
+      res.render('celebrities/update', { celebrity });
     })
     .catch((error) => {
       next(error);
@@ -86,7 +86,7 @@ router.post('/:id/update', (req, res, next) => {
   console.log(id);
   celebrities.findByIdAndUpdate(id, { name, occupation, catchPhrase })
     .then((celebrity) => {
-      res.render('show', { celebrity });
+      res.render('celebrities/show', { celebrity });
     })
     .catch((error) => {
       next(error);
